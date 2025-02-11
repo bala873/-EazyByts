@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+    <header>
+        <h1>Real Time Sneak Chat</h1>
+        <nav>
+            <ul id="navLinks" class="nav-links">
+                <li><a th:href="@{/}" id="homeLink">Home</a></li>
+                <li><a th:href="@{/login}" id="loginLink">Login</a></li>
+                <li><a th:href="@{/req/signup}" id="signUpLink">Sign Up</a></li>
+                <li class="hidden"><a href="#" id="logoutLink">Logout</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </nav>
+    </header>
+    <main id="mainContent">
+        <section id="loginSection" class="section active">
+            <div class="message" th:if="${param.error}">
+                Invalid Username or Password
+            </div>
+            <div class="message" th:if="${param.logout}">
+                Logout Successfully
+            </div>
+            <form id="loginForm" th:action="@{/login}" method="post">
+                <input type="text" id="username" name="username" placeholder="Username" required>
+                <input type="password" id="password" name="password" placeholder="Password" required>
+                <button type="submit" id="submit">Login</button>
+                <div class="signup-container">
+                    <p>Don't have an account? <a th:href="@{/req/signup}" id="signupLink">Sign up</a></p>
+                </div>
+            </form>
+        </section>
+    </main>
+	<script>
+			document.addEventListener('DOMContentLoaded', () => {
+			    const loginForm = document.getElementById('loginForm');
+
+			    loginForm.addEventListener('submit', (e) => {
+			        e.preventDefault(); // Prevent the default form submission behavior
+
+			        // Perform the login process (this can be done via AJAX if needed)
+			        // For demonstration, we'll assume login is successful and redirect to the chat page
+
+			        // Redirect to the chat page
+			        window.location.href = '/chatPage';
+			    });
+
+			    const hamburger = document.getElementById('hamburger');
+			    const navLinks = document.getElementById('navLinks');
+			    hamburger.addEventListener('click', () => {
+			        navLinks.classList.toggle('active');
+			    });
+			});
+
+		</script>
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

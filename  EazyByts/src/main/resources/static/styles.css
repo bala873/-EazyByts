@@ -1,0 +1,289 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Garamond', serif;
+    margin: 0;
+    padding: 0;
+    background: url('@{/Photos/ChatApp_Home.jpg}') no-repeat center center fixed;
+    background-size: cover;
+	background-color: #f4f4f4; /* Fallback color */
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Header */
+header {
+    background-color: rgba(139, 69, 19, 0.9);
+    color: white;
+    padding: 1.5rem;
+    text-align: center;
+    position: relative;
+}
+
+/* Navigation */
+nav {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.nav-links {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+}
+
+.nav-links li {
+    margin: 0 15px;
+    
+}
+
+.nav-links li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    text-align: right;
+}
+
+.nav-links li a:hover {
+    text-decoration: underline;
+}
+/* General Styles for Links */
+a {
+    color: #8b4513;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #5d3410;
+    text-decoration: underline;
+}
+
+/* Specific Styles for the Sign Up Link */
+#signupLink {
+    font-weight: bold;
+    font-size: 16px;
+    padding: 8px 16px;
+    background-color: #f4f4f4;
+    border: 2px solid #8b4513;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+#signupLink:hover {
+    background-color: #8b4513;
+    color: white;
+    border-color: #5d3410;
+}
+
+/* Container for the Sign Up Text */
+.signup-container {
+    margin-top: 20px;
+    text-align: center;
+    font-family: 'Garamond', serif;
+}
+
+.signup-container p {
+    font-size: 18px;
+    color: #333;
+}
+
+/* General Styles for Links */
+a {
+    color: #8b4513;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #5d3410;
+    text-decoration: underline;
+}
+
+/* Specific Styles for the Login Link */
+#logInLink {
+    font-weight: bold;
+    font-size: 16px;
+    padding: 8px 16px;
+    background-color: #f4f4f4;
+    border: 2px solid #8b4513;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+#logInLink:hover {
+    background-color: #8b4513;
+    color: white;
+    border-color: #5d3410;
+}
+
+/* Container for the Login Text */
+.logIn-container {
+    margin-top: 20px;
+    text-align: center;
+    font-family: 'Garamond', serif;
+}
+
+.logIn-container p {
+    font-size: 18px;
+    color: #333;
+}
+
+
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.hamburger .bar {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    margin: 4px 0;
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    nav ul {
+        position: absolute;
+        top: 60px;
+        right: 10px;
+        background-color: rgba(139, 69, 19, 0.9);
+        border-radius: 8px;
+        padding: 10px;
+    }
+
+    nav ul li {
+        margin: 10px 0;
+    }
+
+    main {
+        max-width: 90%;
+    }
+}
+
+/* Main Content */
+main {
+    padding: 1.5rem;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 90%;
+    margin: 2rem auto;
+}
+
+.section.active {
+    display: block;
+}
+
+.hidden {
+    display: none;
+}
+
+#welcomeMessage {
+    margin: 1.5rem 0;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+/* Form */
+form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 300px;
+    margin: 1.5rem auto;
+}
+
+input {
+    margin: 0.5rem 0;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+}
+
+input:focus {
+    border-color: #8b4513;
+    outline: none;
+}
+
+button {
+    padding: 0.75rem;
+    font-size: 1rem;
+    background-color: #8b4513;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #5d3410;
+}
+
+
+@media (max-width: 480px) {
+    body {
+        font-size: 0.85rem;
+    }
+
+    header {
+        padding: 0.75rem;
+    }
+
+    nav ul li a {
+        font-size: 0.9rem;
+    }
+     
+    .hamburger{
+        display: flex;
+    }
+
+    main {
+        padding: 0.75rem;
+    }
+
+    #welcomeMessage {
+        padding: 0.75rem;
+        font-size: 0.9rem;
+    }
+
+    input {
+        padding: 0.5rem;
+    }
+
+    button {
+        padding: 0.5rem;
+    }
+}

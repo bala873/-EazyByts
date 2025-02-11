@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+    <header>
+        <h1>Real Time Sneak Chat</h1>
+        <nav>
+            <ul id="navLinks" class="nav-links">
+                <li><a th:href="@{/}" id="homeLink">Home</a></li>
+                <li><a th:href="@{/login}" id="loginLink">Login</a></li>
+                <li><a th:href="@{/req/signup}" id="signUpLink">Sign Up</a></li>
+                <li class="hidden"><a href="#" id="logoutLink">Logout</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </nav>
+    </header>
+    <main id="mainContent">
+        <section id="homeSection" class="section active">
+            <h2>Welcome to Real Time Sneak Chat</h2>
+            <div id="welcomeMessage">
+                <p>Welcome to Real Time Sneak Chat! Connect with your friends and family in real-time. Our platform offers secure and private messaging with a touch.</p>
+                <p>Sign up today to enjoy the most elegant and seamless chat experience. Already have an account? Log in to reconnect with your loved ones.</p>
+            </div>
+        </section>
+    </main>
+	
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

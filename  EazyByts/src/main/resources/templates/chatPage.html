@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Application</title>
+    <link rel="stylesheet" th:href="@{/chatStyles.css}">
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs/lib/stomp.min.js"></script>
+    <script th:src="@{/js/chat.js}"></script>
+</head>
+<body>
+    <header>
+        <h1>Real Time Sneak Chat</h1>
+        <nav>
+            <ul id="navLinks" class="nav-links">
+                <li style="margin-left:auto;"><a th:href="@{/logout}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="mainContent">
+        <section id="roomSelection" class="section active">
+            <h2>Select Chat Room Type</h2>
+            <button id="privateChatButton">Private Chat</button>
+            <button id="groupChatButton">Group Chat</button>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const privateChatButton = document.getElementById('privateChatButton');
+            const groupChatButton = document.getElementById('groupChatButton');
+
+            privateChatButton.addEventListener('click', () => {
+                window.location.href = '/private';
+            });
+
+            groupChatButton.addEventListener('click', () => {
+                window.location.href = '/group';
+            });
+        });
+    </script>
+</body>
+</html>

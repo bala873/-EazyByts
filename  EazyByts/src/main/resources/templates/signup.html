@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+    <header>
+        <h1>Real Time Sneak Chat</h1>
+        <nav>
+            <ul id="navLinks" class="nav-links">
+                <li><a th:href="@{/}" id="homeLink">Home</a></li>
+                <li><a th:href="@{/login}" id="loginLink">Login</a></li>
+                <li><a th:href="@{/req/signup}" id="signUpLink">Sign Up</a></li>
+                <li class="hidden"><a href="#" id="logoutLink">Logout</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+        </nav>
+    </header>
+    <main id="mainContent">
+        <section id="signUpSection" class="section active">
+            <div class="message" th:if="${message != null}">
+                [[${message}]]
+            </div>
+            <form id="signUpForm" th:action="@{/req/signup}" th:object="${user}" method="post">
+                <input th:field="*{username}" type="text" id="signUpUsername" placeholder="Username" required>
+                <input th:field="*{password}" type="password" id="signUpPassword" placeholder="Password" required>
+                <input th:field="*{email}" type="email" id="signUpEmail" placeholder="Email" required>
+                <input type="password" id="signUpConfirmPassword" placeholder="Confirm Password" required>
+                <button type="submit" id="submit">Create Account</button>
+            
+                <div th:if="${success}" th:text="${success}"></div>
+                <div th:if="${error}" th:text="${error}"></div>
+            </form>
+            
+            <div class="login-container">
+                <p>Already have an account? <a th:href="@{/login}" id="logInLink">Login</a></p>
+            </div>
+        </section>
+    </main>
+    
+	<script>
+	    document.addEventListener('DOMContentLoaded', () => {
+	        const submitButton = document.getElementById("submit");
+
+	        submitButton.addEventListener('click', (e) => {
+	            const password = document.getElementById('signUpPassword').value;
+	            const confirmPassword = document.getElementById('signUpConfirmPassword').value;
+
+	            if (password !== confirmPassword) {
+	                e.preventDefault();
+	                alert("Passwords do not match");
+	            }
+	        });
+
+	        const hamburger = document.getElementById('hamburger');
+	        const navLinks = document.getElementById('navLinks');
+	        hamburger.addEventListener('click', () => {
+	            navLinks.classList.toggle('active');
+	        });
+	    });
+	</script>
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>
+
+
