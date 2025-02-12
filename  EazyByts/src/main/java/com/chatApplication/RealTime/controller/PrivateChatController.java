@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,9 +26,7 @@ public class PrivateChatController {
 
     @MessageMapping("/chat")
     public void processMessage(@Payload PrivateMessage privateMessage) {
-    	PrivateMessage savedMsg = privateMessageService.save(privateMessage);
-    	System.out.println("Sending message to user: " + privateMessage.getRecipientId());
-
+        PrivateMessage savedMsg = privateMessageService.save(privateMessage);
         messagingTemplate.convertAndSendToUser(
                 privateMessage.getRecipientId(), "/queue/messages",
                 new ChatNotification(
@@ -38,6 +37,11 @@ public class PrivateChatController {
                 )
         );
     }
+//    @GetMapping("/users")
+//    public ResponseEntity<List<UserEntity>> getAllUsers() {
+//        List<UserEntity> users = userService.findAll(); // Assuming a userService is available
+//        return ResponseEntity.ok(users);
+//    }
 
     @GetMapping("/messages/{senderId}/{recipientId}")
     public ResponseEntity<List<PrivateMessage>> findChatMessages(@PathVariable String senderId,

@@ -23,16 +23,16 @@ import java.util.Optional;
 //@RequestMapping("/chat")
 public class ChatController {
 
-    private final SimpMessagingTemplate messagingTemplate;
+//    private final SimpMessagingTemplate messagingTemplate;
     private final MessageRepository messageRepository;
-    private final PrivateMessageRepository privateMessageRepository;
+//    private final PrivateMessageRepository privateMessageRepository;
     private final ChatRoomRepository chatRoomRepository;
 
     public ChatController(SimpMessagingTemplate messagingTemplate, MessageRepository messageRepository,
                           PrivateMessageRepository privateMessageRepository, ChatRoomRepository chatRoomRepository) {
-        this.messagingTemplate = messagingTemplate;
+//        this.messagingTemplate = messagingTemplate;
         this.messageRepository = messageRepository;
-        this.privateMessageRepository = privateMessageRepository;
+//        this.privateMessageRepository = privateMessageRepository;
         this.chatRoomRepository = chatRoomRepository;
     }
 
@@ -71,10 +71,10 @@ public class ChatController {
 //  
 //
 //    // Search messages by keyword
-    @GetMapping("/search")
-    public List<Message> searchMessages(@RequestParam String keyword) {
-        return messageRepository.findByContentContainingIgnoreCase(keyword);
-    }
+//    @GetMapping("/search")
+//    public List<Message> searchMessages(@RequestParam String keyword) {
+//        return messageRepository.findByContentContainingIgnoreCase(keyword);
+//    }
 //
 //    // Get all private messages for a user
 //    @GetMapping("/privateMessages")

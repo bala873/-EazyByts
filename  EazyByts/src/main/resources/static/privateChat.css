@@ -11,6 +11,14 @@ body {
     flex-direction: column;
 }
 
+header {
+    background-color: rgba(139, 69, 19, 0.9);
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+
+
 .chat-container {
     display: flex;
     max-width: 800px;
@@ -30,7 +38,7 @@ body {
     border-right: 1px solid #ccc;
     padding: 20px;
     box-sizing: border-box;
-    background-color: #3498db;
+    background-color: rgba(139, 69, 19, 0.9);
     color: #fff;
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
@@ -124,7 +132,7 @@ body {
 }
 
 .sender {
-    background-color: #3498db;
+    background-color: rgba(139, 69, 19, 0.9);
     color: #fff;
     align-self: flex-end;
 }
@@ -151,7 +159,7 @@ body {
 .message-input button {
     padding: 10px;
     border: none;
-    background-color: #3498db;
+    background-color: rgba(139, 69, 19, 0.9);
     color: #fff;
     border-radius: 5px;
     cursor: pointer;
@@ -188,7 +196,7 @@ body {
 .user-form button {
     padding: 12px;
     border: none;
-    background-color: #3498db;
+    background-color: rgba(139, 69, 19, 0.9);
     color: #fff;
     border-radius: 5px;
     cursor: pointer;

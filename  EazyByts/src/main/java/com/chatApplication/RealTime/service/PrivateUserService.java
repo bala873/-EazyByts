@@ -22,7 +22,7 @@ public class PrivateUserService {
 	    }
 
 	    public void disconnect(PrivateUser user) {
-	        var storedUser = privateUserRepository.findById(user.getNickName()).orElse(null);
+	        var storedUser = privateUserRepository.findById(user.getFullName()).orElse(null);
 	        if (storedUser != null) {
 	            storedUser.setStatus(Status.OFFLINE);
 	            privateUserRepository.save(storedUser);

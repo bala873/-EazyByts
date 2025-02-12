@@ -15,7 +15,6 @@ import lombok.Setter;
 public class PrivateUser {
 	
 	@Id
-    private String nickName;
 	private String fullName;
 	private Status status;
 	
