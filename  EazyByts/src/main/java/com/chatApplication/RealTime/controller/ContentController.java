@@ -13,7 +13,7 @@ public class ContentController {
 
 	@GetMapping("/")
 	public String Home() {
-		return "home";
+		return "index";
 	}
 	
 	

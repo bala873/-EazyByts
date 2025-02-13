@@ -22,18 +22,17 @@ public class PrivateUserController {
 	
 	@MessageMapping("/user.addUser")
     @SendTo("/user/public")
-    public PrivateUser addUser(
-            @Payload PrivateUser user
-    ) {
+    public PrivateUser addUser(@Payload PrivateUser user) {
+		System.out.println(user.getFullName());
+		System.out.println(user.getStatus());
         privateUserService.saveUser(user);
         return user;
     }
 
     @MessageMapping("/user.disconnectUser")
     @SendTo("/user/public")
-    public PrivateUser disconnectUser(
-            @Payload PrivateUser user
-    ) {
+    public PrivateUser disconnectUser(@Payload PrivateUser user) {
+   
         privateUserService.disconnect(user);
         return user;
     }

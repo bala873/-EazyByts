@@ -12,7 +12,7 @@
 
 <div class="user-form" id="username-page">
      <h2 class="title">Type your Name to enter the Privatechat</h2>
-    <form id="usernameForm" th:action="@{/chatroom}" method="post">
+    <form id="usernameForm">
         
        
 		<input type="text" id="fullname" placeholder="Username" autocomplete="off" class="form-control" required />
@@ -30,7 +30,7 @@
             </ul>
         </div>
         <div>
-            <p id="connected-user-fullname" th:text="${connectedUserFullName}"></p>
+            <p id="connected-user-fullname" ></p>
             <a class="logout" th:href="@{/logout}" id="logout">Logout</a>
         </div>
     </div>
@@ -43,7 +43,7 @@
             </div>
         </div>
 
-        <form id="messageForm" name="messageForm" class="hidden" th:action="@{/send}" method="post">
+        <form id="messageForm" name="messageForm" class="hidden" th:action="@{/chat}" method="post">
             <div class="message-input">
                 <input autocomplete="off" type="text" id="message" name="message" placeholder="Type your message...">
                 <button type="submit">Send</button>

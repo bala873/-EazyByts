@@ -17,7 +17,7 @@ public class PrivateUserService {
 	private final PrivateUserRepository privateUserRepository;
 	
 	 public void saveUser(PrivateUser user) {
-	        user.setStatus(Status.ONLINE);
+	        //user.setStatus(Status.ONLINE);
 	        privateUserRepository.save(user);
 	    }
 

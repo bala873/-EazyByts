@@ -41,7 +41,7 @@ public class SecurityConfig {
         .authenticationProvider(authenticationProvider())
         	.csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/", "/req/signup", "/chatPage","/private","/group", "/ws/**","/photos/**", "/css/**", "/js/**", "/*.js", "/*.css").permitAll()
+                .requestMatchers("/", "/req/signup","/users", "/chatPage","/private","/group", "/ws/**","/messages/{senderId}/{recipientId}","/img/**", "/css/**", "/js/**", "/*.js", "/*.css").permitAll()
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
