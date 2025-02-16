@@ -54,7 +54,9 @@ function connect(event) {
  */
 function onConnected() {
     debugLog("Connected to WebSocket. Subscribing to user queue...");
-    stompClient.subscribe(`/user/${fullname}/queue/messages`, onMessageReceived);
+
+	stompClient.subscribe(`/user/${fullname}/queue/messages`, onMessageReceived);
+	//stompClient.subscribe(`/user/public`, onMessageReceived);
 
     debugLog("Sending user connection request...");
     stompClient.send("/app/user.addUser", {}, JSON.stringify({ fullName: fullname, status: 'ONLINE' }));
@@ -63,26 +65,25 @@ function onConnected() {
     findAndDisplayConnectedUsers();
 }
 
+
 /**
  * Fetch connected users and display them
  */
 async function findAndDisplayConnectedUsers() {
-    debugLog("Fetching connected users...");
-    try {
-        const response = await fetch('/users');
-        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+    const connectedUsersResponse = await fetch('/users');
+    let connectedUsers = await connectedUsersResponse.json();
+    connectedUsers = connectedUsers.filter(user => user.fullName !== fullname);
+    const connectedUsersList = document.getElementById('connectedUsers');
+    connectedUsersList.innerHTML = '';
 
-        let connectedUsers = await response.json();
-        debugLog("Connected users received:", connectedUsers);
-
-        connectedUsers = connectedUsers.filter(user => user.fullName !== fullname);
-        const connectedUsersList = document.getElementById('connectedUsers');
-        connectedUsersList.innerHTML = '';
-
-        connectedUsers.forEach(user => appendUserElement(user, connectedUsersList));
-    } catch (error) {
-        debugLog("Error fetching users", error);
-    }
+    connectedUsers.forEach(user => {
+        appendUserElement(user, connectedUsersList);
+        if (connectedUsers.indexOf(user) < connectedUsers.length - 1) {
+            const separator = document.createElement('li');
+            separator.classList.add('separator');
+            connectedUsersList.appendChild(separator);
+        }
+    });
 }
 
 /**
@@ -156,7 +157,7 @@ async function fetchAndDisplayUserChat() {
  * Displays a chat message in the chat area
  */
 function displayMessage(senderId, content) {
-    debugLog(`Displaying message from ${senderId}: ${content}`);
+    console.log(`💬 Adding message from ${senderId}: ${content}`);
 
     const messageContainer = document.createElement('div');
     messageContainer.classList.add('message', senderId === fullname ? 'sender' : 'receiver');
@@ -167,7 +168,10 @@ function displayMessage(senderId, content) {
     messageContainer.appendChild(message);
     chatArea.appendChild(messageContainer);
     chatArea.scrollTop = chatArea.scrollHeight;
+
+    console.log("✅ Message displayed in real-time.");
 }
+
 
 /**
  * Handles WebSocket errors
@@ -182,19 +186,28 @@ function onError(error) {
 function sendMessage(event) {
     event.preventDefault();
 
+    if (!messageInput) {
+        console.error("❌ Error: messageInput not found in the DOM.");
+        return;
+    }
+
     const messageContent = messageInput.value.trim();
     if (!messageContent) {
         alert("Cannot send an empty message.");
         return;
     }
 
-    if (!stompClient) {
-        debugLog("Message not sent: WebSocket is not connected.");
+    if (!stompClient || !stompClient.connected) {
+        console.error("❌ Error: WebSocket is not connected.");
         alert("Connection lost. Please refresh and try again.");
         return;
     }
 
-    debugLog("Sending message", { senderId: fullname, recipientId: selectedUserId, content: messageContent });
+    if (!selectedUserId) {
+        console.error("❌ Error: No recipient selected.");
+        alert("Please select a user to chat with.");
+        return;
+    }
 
     const chatMessage = {
         senderId: fullname,
@@ -203,62 +216,45 @@ function sendMessage(event) {
         timestamp: new Date()
     };
 
-    stompClient.send("/app/chat", {}, JSON.stringify(chatMessage));
-    displayMessage(fullname, messageContent);
-    messageInput.value = '';
+    console.log("📤 Sending message via WebSocket:", chatMessage);
+
+    try {
+        stompClient.send("/app/chat", {}, JSON.stringify(chatMessage));
+        console.log("✅ Message successfully sent!");
+
+        // **Instantly Display Sent Message in Chat**
+        displayMessage(fullname, messageContent);
+        messageInput.value = '';
+    } catch (error) {
+        console.error("❌ Error sending message:", error);
+        alert("Failed to send message. Please try again.");
+    }
 }
+
 
 /**
  * Handles received messages
  */
 async function onMessageReceived(payload) {
-    console.log("📩 Raw message received:", payload);
-
-    if (!payload || !payload.body) {
-        console.error("❌ Error: Received empty or invalid payload:", payload);
-        return;
-    }
-
-    let message;
-    try {
-        message = JSON.parse(payload.body);
-        console.log("✅ Parsed message:", message);
-    } catch (error) {
-        console.error("🚨 Error parsing message payload:", error);
-        return;
-    }
-
-    try {
-        await findAndDisplayConnectedUsers();
-    } catch (error) {
-        console.error("🚨 Error fetching connected users:", error);
-    }
-
-    if (!selectedUserId) {
-        console.warn("⚠️ No user selected, skipping message display.");
-        return;
-    }
-
-    if (selectedUserId === message.senderId) {
-        console.log(`📬 Displaying message from ${message.senderId}...`);
+    await findAndDisplayConnectedUsers();
+    console.log('Message received', payload);
+    const message = JSON.parse(payload.body);
+    if (selectedUserId && selectedUserId === message.senderId) {
         displayMessage(message.senderId, message.content);
+        chatArea.scrollTop = chatArea.scrollHeight;
+    }
+
+    if (selectedUserId) {
+        document.querySelector(`#${selectedUserId}`).classList.add('active');
     } else {
-        console.log(`📨 New message from ${message.senderId}, but user is not active.`);
+        messageForm.classList.add('hidden');
     }
 
     const notifiedUser = document.querySelector(`#${message.senderId}`);
-    if (!notifiedUser) {
-        console.warn(`⚠️ User element for ${message.senderId} not found in DOM`);
-        return;
-    }
-
-    const nbrMsg = notifiedUser.querySelector('.nbr-msg');
-    if (nbrMsg) {
+    if (notifiedUser && !notifiedUser.classList.contains('active')) {
+        const nbrMsg = notifiedUser.querySelector('.nbr-msg');
         nbrMsg.classList.remove('hidden');
-        nbrMsg.textContent = parseInt(nbrMsg.textContent) + 1;
-        console.log(`🔔 Updated unread messages count for ${message.senderId}`);
-    } else {
-        console.warn(`⚠️ Warning: .nbr-msg element not found for ${message.senderId}`);
+        nbrMsg.textContent = '';
     }
 }
 

@@ -22,7 +22,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void configureMessageBroker(MessageBrokerRegistry config) {
   
     	 // Enable a simple in-memory message broker
-        config.enableSimpleBroker( "/topic","/queue","user");
+        config.enableSimpleBroker( "/topic","/queue","/user");
     	// Set the application destination prefix
         config.setApplicationDestinationPrefixes("/app"); 
         config.setUserDestinationPrefix("/user");
